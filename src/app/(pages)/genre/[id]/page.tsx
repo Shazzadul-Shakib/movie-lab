@@ -97,7 +97,7 @@ export default function GenrePage() {
           </div>
 
           {/* Sort Dropdown */}
-          <div className='flex items-center gap-2'>
+          <div className='flex items-center gap-2 self-end sm:self-auto'>
             <ArrowUpDown className='h-4 w-4 mr-2 text-muted-foreground shrink-0' />
             <select
               value={sortBy}
@@ -157,29 +157,35 @@ export default function GenrePage() {
 
       {/* Pagination */}
       {!isLoading && movies.length > 0 && totalPages > 1 && (
-        <div className='flex items-center justify-center gap-2 pt-4'>
+        <div className='flex items-center justify-center gap-1 sm:gap-2 pt-4 flex-wrap'>
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
-            className='flex items-center gap-1 px-3 py-2 rounded-lg bg-card border border-border text-sm font-medium transition-colors hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer'
+            className='flex items-center gap-1 px-2 sm:px-3 py-2 rounded-lg bg-card border border-border text-sm font-medium transition-colors hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer'
           >
             <ChevronLeft className='h-4 w-4' />
-            Previous
+            <span className='hidden sm:inline'>Previous</span>
           </button>
 
-          <div className='flex items-center gap-2'>
+          <div className='flex items-center gap-1 sm:gap-2'>
             {/* Current page range */}
             {(() => {
               const pageNumbers = [];
-              let startPage = Math.max(1, page - 2);
-              let endPage = Math.min(totalPages, page + 2);
+              // Show fewer pages on mobile (1 before, 1 after), more on desktop (2 before, 2 after)
+              const isMobile =
+                typeof window !== 'undefined' && window.innerWidth < 640;
+              const range = isMobile ? 1 : 2;
 
-              // Adjust to always show 5 pages when possible
-              if (endPage - startPage < 4) {
+              let startPage = Math.max(1, page - range);
+              let endPage = Math.min(totalPages, page + range);
+
+              // Adjust to show consistent number of pages
+              const targetPages = isMobile ? 3 : 5;
+              if (endPage - startPage < targetPages - 1) {
                 if (startPage === 1) {
-                  endPage = Math.min(5, totalPages);
+                  endPage = Math.min(targetPages, totalPages);
                 } else if (endPage === totalPages) {
-                  startPage = Math.max(1, totalPages - 4);
+                  startPage = Math.max(1, totalPages - (targetPages - 1));
                 }
               }
 
@@ -194,12 +200,14 @@ export default function GenrePage() {
                     <>
                       <button
                         onClick={() => setPage(1)}
-                        className='px-3 py-2 rounded-lg bg-card border border-border text-sm font-medium transition-colors hover:bg-muted cursor-pointer'
+                        className='px-2 sm:px-3 py-2 rounded-lg bg-card border border-border text-sm font-medium transition-colors hover:bg-muted cursor-pointer min-w-[36px]'
                       >
                         1
                       </button>
                       {startPage > 2 && (
-                        <span className='text-muted-foreground'>...</span>
+                        <span className='text-muted-foreground text-xs sm:text-sm'>
+                          ...
+                        </span>
                       )}
                     </>
                   )}
@@ -209,7 +217,7 @@ export default function GenrePage() {
                     <button
                       key={pageNum}
                       onClick={() => setPage(pageNum)}
-                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
+                      className={`px-2 sm:px-3 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer min-w-[36px] ${
                         page === pageNum
                           ? 'bg-primary text-white'
                           : 'bg-card border border-border hover:bg-muted'
@@ -223,11 +231,13 @@ export default function GenrePage() {
                   {endPage < totalPages && (
                     <>
                       {endPage < totalPages - 1 && (
-                        <span className='text-muted-foreground'>...</span>
+                        <span className='text-muted-foreground text-xs sm:text-sm'>
+                          ...
+                        </span>
                       )}
                       <button
                         onClick={() => setPage(totalPages)}
-                        className='px-3 py-2 rounded-lg bg-card border border-border text-sm font-medium transition-colors hover:bg-muted cursor-pointer'
+                        className='px-2 sm:px-3 py-2 rounded-lg bg-card border border-border text-sm font-medium transition-colors hover:bg-muted cursor-pointer min-w-[36px]'
                       >
                         {totalPages}
                       </button>
@@ -241,9 +251,9 @@ export default function GenrePage() {
           <button
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page === totalPages}
-            className='flex items-center gap-1 px-3 py-2 rounded-lg bg-card border border-border text-sm font-medium transition-colors hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer'
+            className='flex items-center gap-1 px-2 sm:px-3 py-2 rounded-lg bg-card border border-border text-sm font-medium transition-colors hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer'
           >
-            Next
+            <span className='hidden sm:inline'>Next</span>
             <ChevronRight className='h-4 w-4' />
           </button>
         </div>

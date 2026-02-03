@@ -108,7 +108,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
 
             {/* Search Results Dropdown */}
             {showResults && debouncedQuery && (
-              <div className='absolute top-full mt-2 w-full bg-background border border-border rounded-lg shadow-xl max-h-[500px] overflow-y-auto z-50'>
+              <div className='absolute top-full mt-0 w-full bg-background border border-border rounded-lg shadow-xl max-h-[500px] overflow-y-auto z-50'>
                 {isLoading ? (
                   <div className='p-2'>
                     {Array.from({ length: 4 }).map((_, i) => (
@@ -218,7 +218,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
 
             {/* Mobile Search Results Dropdown */}
             {showResults && debouncedQuery && (
-              <div className='absolute top-full mt-2 w-full bg-background border border-border rounded-lg shadow-xl max-h-[400px] overflow-y-auto z-50 left-0'>
+              <div className='absolute top-full mt-0 w-full bg-background border border-border rounded-lg shadow-xl max-h-[400px] overflow-y-auto z-50 left-0'>
                 {isLoading ? (
                   <div className='p-2'>
                     {Array.from({ length: 4 }).map((_, i) => (

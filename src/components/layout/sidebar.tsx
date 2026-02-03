@@ -48,7 +48,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* Mobile Overlay */}
       {isOpen && (
         <div
-          className='fixed inset-0 bg-black/80 z-40 lg:hidden cursor-pointer'
+          className='fixed inset-0 bg-black/80 backdrop-blur-sm z-40 lg:hidden cursor-pointer'
           onClick={onClose}
           aria-hidden='true'
         />
@@ -56,7 +56,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 border-r border-border bg-card flex flex-col z-40 transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 border-r border-border bg-card/95 backdrop-blur-xl flex flex-col z-40 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:bg-card ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >

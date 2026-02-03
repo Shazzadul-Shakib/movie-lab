@@ -78,14 +78,10 @@ export interface MovieCredits {
 }
 
 // Component Props Types
-export interface MovieCardData {
-  id: number;
-  title: string;
-  posterUrl: string;
-  rating: number;
-  year: number;
-  releaseDate: string;
-}
+export type MovieCardData = Pick<
+  Movie,
+  'id' | 'title' | 'poster_path' | 'vote_average' | 'release_date'
+>;
 
 export interface GenreCardData {
   id: number;

@@ -3,3 +3,7 @@ export { Header } from './layout/header';
 export { Sidebar } from './layout/sidebar';
 export { MainContent } from './layout/main-content';
 export { ThemeToggle } from './ui/theme-toggle';
+export { MovieCard } from './movie/movie-card';
+export { MovieList } from './movie/movie-list';
+export { GenreCard } from './genre/genre-card';
+export { SectionHeader } from './section/section-header';

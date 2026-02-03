@@ -26,7 +26,7 @@ export default function RootLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleMenuToggle = useCallback(() => {
-    setSidebarOpen(prev => !prev);
+    setSidebarOpen((prev) => !prev);
   }, []);
 
   const handleClose = useCallback(() => {
@@ -37,7 +37,10 @@ export default function RootLayout({
     <html lang='en' suppressHydrationWarning>
       <head>
         <title>MovieLab - Discover and Explore Movies Seamlessly</title>
-        <meta name="description" content="Discover and Explore Movies Seamlessly" />
+        <meta
+          name='description'
+          content='Discover and Explore Movies Seamlessly'
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}

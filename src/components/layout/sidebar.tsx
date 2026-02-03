@@ -70,66 +70,66 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-      {/* Main Navigation - Static */}
-      <div className='p-4 pb-0'>
-        <nav className='flex flex-col gap-1'>
-          {mainLinks.map((link) => {
-            const Icon = link.icon;
-            const isActive = pathname === link.href;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 cursor-pointer ${
-                  isActive
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md'
-                    : 'text-foreground hover:bg-primary/20 hover:text-primary'
-                }`}
-              >
-                <Icon size={20} />
-                {link.name}
-              </Link>
-            );
-          })}
-        </nav>
-      </div>
+        {/* Main Navigation - Static */}
+        <div className='p-4 pb-0'>
+          <nav className='flex flex-col gap-1'>
+            {mainLinks.map((link) => {
+              const Icon = link.icon;
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 cursor-pointer ${
+                    isActive
+                      ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md'
+                      : 'text-foreground hover:bg-primary/20 hover:text-primary'
+                  }`}
+                >
+                  <Icon size={20} />
+                  {link.name}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
 
-      {/* Genres - Scrollable list with static header */}
-      <div className='flex-1 overflow-hidden p-4'>
-        <div className='flex h-full flex-col'>
-          <h3 className='flex-none px-3 py-2 text-xs font-bold uppercase tracking-wider text-primary bg-muted rounded-lg border border-border'>
-            Genres
-          </h3>
-          <div className='mt-3 flex-1 overflow-y-auto pr-1'>
-            <nav className='flex flex-col gap-1'>
-              {genres.map((genre) => {
-                const isActive = pathname === genre.href;
-                return (
-                  <Link
-                    key={genre.href}
-                    href={genre.href}
-                    className={`rounded-lg px-3 py-2 text-sm transition-all duration-200 cursor-pointer ${
-                      isActive
-                        ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md'
-                        : 'text-muted-foreground hover:bg-primary/20 hover:text-primary'
-                    }`}
-                  >
-                    {genre.name}
-                  </Link>
-                );
-              })}
-            </nav>
+        {/* Genres - Scrollable list with static header */}
+        <div className='flex-1 overflow-hidden p-4'>
+          <div className='flex h-full flex-col'>
+            <h3 className='flex-none px-3 py-2 text-xs font-bold uppercase tracking-wider text-primary bg-muted rounded-lg border border-border'>
+              Genres
+            </h3>
+            <div className='mt-3 flex-1 overflow-y-auto pr-1'>
+              <nav className='flex flex-col gap-1'>
+                {genres.map((genre) => {
+                  const isActive = pathname === genre.href;
+                  return (
+                    <Link
+                      key={genre.href}
+                      href={genre.href}
+                      className={`rounded-lg px-3 py-2 text-sm transition-all duration-200 cursor-pointer ${
+                        isActive
+                          ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md'
+                          : 'text-muted-foreground hover:bg-primary/20 hover:text-primary'
+                      }`}
+                    >
+                      {genre.name}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Copyright Footer - Static */}
-      <div className='border-t border-border p-4 bg-card'>
-        <p className='text-[10px] text-center text-muted-foreground'>
-          © 2026 Movielab.
-        </p>
-      </div>
-    </aside>
+        {/* Copyright Footer - Static */}
+        <div className='border-t border-border p-4 bg-card'>
+          <p className='text-[10px] text-center text-muted-foreground'>
+            © 2026 Movielab.
+          </p>
+        </div>
+      </aside>
     </>
   );
 }

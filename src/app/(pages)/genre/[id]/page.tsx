@@ -86,9 +86,13 @@ export default function GenrePage() {
 
         <div className='flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4'>
           <div>
-            <h1 className='text-3xl md:text-4xl font-bold text-foreground'>
-              {genre?.name || 'Loading...'}
-            </h1>
+            {genre?.name ? (
+              <h1 className='text-3xl md:text-4xl font-bold text-foreground'>
+                {genre.name}
+              </h1>
+            ) : (
+              <div className='h-9 md:h-11 w-48 bg-muted rounded-lg animate-pulse' />
+            )}
             <p className='text-muted-foreground mt-2'>
               {moviesData?.total_results
                 ? `${moviesData.total_results.toLocaleString()} movies found`
@@ -144,10 +148,9 @@ export default function GenrePage() {
               <MovieCard
                 id={movie.id}
                 title={movie.title}
-                posterUrl={getPosterUrl(movie.poster_path)}
-                rating={movie.vote_average}
-                year={getYearFromDate(movie.release_date)}
-                releaseDate={movie.release_date}
+                poster_path={movie.poster_path}
+                vote_average={movie.vote_average}
+                release_date={movie.release_date}
                 // size='small'
               />
             </div>

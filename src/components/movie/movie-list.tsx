@@ -23,10 +23,9 @@ export function MovieList({ movies, size = 'medium' }: MovieListProps) {
             <MovieCard
               id={movie.id}
               title={movie.title}
-              posterUrl={movie.posterUrl}
-              rating={movie.rating}
-              year={movie.year}
-              releaseDate={movie.releaseDate}
+              poster_path={movie.poster_path}
+              vote_average={movie.vote_average}
+              release_date={movie.release_date}
               size={size}
             />
           </div>

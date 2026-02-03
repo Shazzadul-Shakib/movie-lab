@@ -48,10 +48,9 @@ export default function Recent() {
               <MovieCard
                 id={movie.id}
                 title={movie.title}
-                posterUrl={getPosterUrl(movie.posterPath)}
-                rating={movie.rating}
-                year={getYearFromDate(movie.releaseDate)}
-                releaseDate={movie.releaseDate}
+                poster_path={movie.posterPath}
+                vote_average={movie.rating}
+                release_date={movie.releaseDate}
               />
             </div>
           ))}

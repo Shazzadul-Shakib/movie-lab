@@ -79,10 +79,9 @@ export default function Home() {
       movies?.slice(0, 10).map((movie) => ({
         id: movie.id,
         title: movie.title,
-        posterUrl: getPosterUrl(movie.poster_path),
-        rating: movie.vote_average,
-        year: getYearFromDate(movie.release_date),
-        releaseDate: movie.release_date,
+        poster_path: movie.poster_path,
+        vote_average: movie.vote_average,
+        release_date: movie.release_date,
       })) || []
     );
   };

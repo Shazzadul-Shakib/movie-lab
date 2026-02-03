@@ -31,6 +31,52 @@ export interface GenresResponse {
   genres: Genre[];
 }
 
+// Movie Details Types
+export interface MovieDetails {
+  id: number;
+  title: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  overview: string;
+  release_date: string;
+  runtime: number;
+  vote_average: number;
+  vote_count: number;
+  genres: Genre[];
+  tagline: string;
+  status: string;
+  budget: number;
+  revenue: number;
+  original_language: string;
+  original_title: string;
+  popularity: number;
+  adult: boolean;
+  video: boolean;
+  homepage: string | null;
+}
+
+export interface CastMember {
+  id: number;
+  name: string;
+  character: string;
+  profile_path: string | null;
+  order: number;
+}
+
+export interface CrewMember {
+  id: number;
+  name: string;
+  job: string;
+  department: string;
+  profile_path: string | null;
+}
+
+export interface MovieCredits {
+  id: number;
+  cast: CastMember[];
+  crew: CrewMember[];
+}
+
 // Component Props Types
 export interface MovieCardData {
   id: number;

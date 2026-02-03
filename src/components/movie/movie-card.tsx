@@ -37,9 +37,9 @@ export function MovieCard({
   return (
     <Link
       href={`/movie/${id}`}
-      className={`${sizeClasses[size]} flex-shrink-0 group cursor-pointer`}
+      className={`${sizeClasses[size]} flex-shrink-0 group cursor-pointer block`}
     >
-      <div className='relative overflow-hidden rounded-lg bg-muted transition-transform duration-300 group-hover:scale-105 group-hover:shadow-xl'>
+      <div className='relative overflow-hidden rounded-lg bg-muted transition-transform duration-300 group-hover:scale-105 group-hover:shadow-xl h-full'>
         {/* Movie Poster */}
         <div className={`relative ${imageHeight[size]} w-full overflow-hidden`}>
           <Image
@@ -63,7 +63,9 @@ export function MovieCard({
           <h3 className='line-clamp-1 text-sm font-semibold text-foreground group-hover:text-primary transition-colors'>
             {title}
           </h3>
-          <p className='text-xs text-muted-foreground mt-0.5'>{year}</p>
+          <p className='text-xs text-muted-foreground mt-0.5'>
+            {year > 0 ? year : 'N/A'}
+          </p>
         </div>
       </div>
     </Link>

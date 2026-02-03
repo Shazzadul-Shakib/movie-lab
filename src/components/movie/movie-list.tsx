@@ -20,6 +20,7 @@ export function MovieList({ movies, size = 'medium' }: MovieListProps) {
             posterUrl={movie.posterUrl}
             rating={movie.rating}
             year={movie.year}
+            releaseDate={movie.releaseDate}
             size={size}
           />
         ))}

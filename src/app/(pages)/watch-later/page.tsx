@@ -1,49 +1,22 @@
 'use client';
 
-import { useState } from 'react';
-import { useRecentlyViewedStore } from '@/store/recently-viewed';
+import { useWatchLaterStore } from '@/store/watch-later';
 import { MovieCard } from '@/components/movie/movie-card';
-import { MovieCardSkeleton } from '@/components/skeleton/movie-card-skeleton';
 import { getPosterUrl, getYearFromDate } from '@/lib/api/tmdb';
 
-export default function Recent() {
-  const [isHydrated] = useState(() => typeof window !== 'undefined');
-  const movies = useRecentlyViewedStore((state) => state.movies);
-  const clearAll = useRecentlyViewedStore((state) => state.clearAll);
-
-  if (!isHydrated) {
-    return (
-      <div className='space-y-6'>
-        <div className='flex items-center justify-between'>
-          <div>
-            <h1 className='text-3xl md:text-4xl font-bold text-foreground'>
-              Recently Viewed
-            </h1>
-            <p className='text-muted-foreground mt-2'>
-              Your viewing history from most recent
-            </p>
-          </div>
-        </div>
-        <div className='grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-3 sm:gap-4'>
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className='w-full'>
-              <MovieCardSkeleton size='small' />
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
+export default function WatchLater() {
+  const movies = useWatchLaterStore((state) => state.movies);
+  const clearAll = useWatchLaterStore((state) => state.clearAll);
 
   return (
     <div className='space-y-6'>
       <div className='flex items-center justify-between'>
         <div>
           <h1 className='text-3xl md:text-4xl font-bold text-foreground'>
-            Recently Viewed
+            Watch Later
           </h1>
           <p className='text-muted-foreground mt-2'>
-            Your viewing history from most recent
+            Movies you want to watch ({movies.length})
           </p>
         </div>
         {movies.length > 0 && (
@@ -60,11 +33,11 @@ export default function Recent() {
         <div className='flex flex-col items-center justify-center py-16 px-4'>
           <div className='text-center max-w-md'>
             <h2 className='text-xl font-semibold text-foreground mb-2'>
-              No viewing history yet
+              No movies in watch later
             </h2>
             <p className='text-muted-foreground'>
-              Movies you view will appear here. Start exploring to build your
-              history!
+              Click the bookmark icon on any movie card to add it to your watch
+              later list!
             </p>
           </div>
         </div>

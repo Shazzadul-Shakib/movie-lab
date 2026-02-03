@@ -84,6 +84,7 @@ export interface MovieCardData {
   posterUrl: string;
   rating: number;
   year: number;
+  releaseDate: string;
 }
 
 export interface GenreCardData {

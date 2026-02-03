@@ -82,6 +82,7 @@ export default function Home() {
         posterUrl: getPosterUrl(movie.poster_path),
         rating: movie.vote_average,
         year: getYearFromDate(movie.release_date),
+        releaseDate: movie.release_date,
       })) || []
     );
   };
@@ -193,6 +194,7 @@ export default function Home() {
             {genresData?.genres.map((genre) => (
               <GenreCard
                 key={genre.id}
+                id={genre.id}
                 name={genre.name}
                 href={`/genre/${genre.id}`}
               />

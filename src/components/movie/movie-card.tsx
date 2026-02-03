@@ -1,8 +1,10 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Star } from 'lucide-react';
+import { Star, Bookmark } from 'lucide-react';
+import { useWatchLaterStore } from '@/store/watch-later';
 import type { MovieCardSize } from '@/types';
 
 interface MovieCardProps {
@@ -11,6 +13,7 @@ interface MovieCardProps {
   posterUrl: string;
   rating: number;
   year: number;
+  releaseDate?: string;
   size?: MovieCardSize;
 }
 
@@ -20,8 +23,41 @@ export function MovieCard({
   posterUrl,
   rating,
   year,
+  releaseDate = '',
   size = 'medium',
 }: MovieCardProps) {
+  const [isHydrated, setIsHydrated] = useState(
+    () => typeof window !== 'undefined',
+  );
+  const addMovie = useWatchLaterStore((state) => state.addMovie);
+  const removeMovie = useWatchLaterStore((state) => state.removeMovie);
+  const watchLaterMovies = useWatchLaterStore((state) => state.movies);
+  const inWatchLater = isHydrated && watchLaterMovies.some((m) => m.id === id);
+
+  const handleWatchLaterClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (inWatchLater) {
+      removeMovie(id);
+    } else {
+      // Extract the path part from the full URL (e.g., /w500/abc.jpg -> /abc.jpg)
+      let posterPath: string | null = null;
+      if (!posterUrl.includes('placeholder')) {
+        const match = posterUrl.match(/\/t\/p\/w\d+(\/.*$)/);
+        posterPath = match ? match[1] : null;
+      }
+
+      addMovie({
+        id,
+        title,
+        posterPath,
+        rating,
+        releaseDate,
+      });
+    }
+  };
+
   const sizeClasses = {
     small: 'w-32 sm:w-36',
     medium: 'w-36 sm:w-44 md:w-48',
@@ -56,6 +92,23 @@ export function MovieCard({
               {rating.toFixed(1)}
             </span>
           </div>
+
+          {/* Watch Later Button */}
+          {isHydrated && (
+            <button
+              onClick={handleWatchLaterClick}
+              className='absolute top-2 left-2 rounded-full bg-black/80 p-1.5 backdrop-blur-sm transition-colors hover:bg-black/90 cursor-pointer'
+              aria-label={
+                inWatchLater ? 'Remove from watch later' : 'Add to watch later'
+              }
+            >
+              <Bookmark
+                className={`h-3.5 w-3.5 transition-colors ${
+                  inWatchLater ? 'fill-primary text-primary' : 'text-white'
+                }`}
+              />
+            </button>
+          )}
         </div>
 
         {/* Movie Info */}

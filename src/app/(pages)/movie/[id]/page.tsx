@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, Clock, Star, ArrowLeft, User } from 'lucide-react';
+import { Calendar, Clock, Star, ArrowLeft, User, Bookmark } from 'lucide-react';
 import {
   useMovieDetails,
   useMovieCredits,
@@ -18,6 +18,7 @@ import {
   getYearFromDate,
 } from '@/lib/api/tmdb';
 import { useRecentlyViewedStore } from '@/store/recently-viewed';
+import { useWatchLaterStore } from '@/store/watch-later';
 import { MovieList } from '@/components/movie/movie-list';
 import { MovieCardSkeleton } from '@/components/skeleton/movie-card-skeleton';
 import type { MovieCardData } from '@/types';
@@ -26,7 +27,15 @@ import { toast } from 'sonner';
 export default function MovieDetailsPage() {
   const params = useParams();
   const movieId = Number(params.id);
-  const addMovie = useRecentlyViewedStore((state) => state.addMovie);
+  const [isHydrated, setIsHydrated] = useState(
+    () => typeof window !== 'undefined',
+  );
+  const addRecentlyViewed = useRecentlyViewedStore((state) => state.addMovie);
+  const addToWatchLater = useWatchLaterStore((state) => state.addMovie);
+  const removeFromWatchLater = useWatchLaterStore((state) => state.removeMovie);
+  const watchLaterMovies = useWatchLaterStore((state) => state.movies);
+  const inWatchLater =
+    isHydrated && watchLaterMovies.some((m) => m.id === movieId);
 
   const {
     data: movie,
@@ -42,7 +51,7 @@ export default function MovieDetailsPage() {
   // Add to recently viewed when movie data is loaded
   useEffect(() => {
     if (movie) {
-      addMovie({
+      addRecentlyViewed({
         id: movie.id,
         title: movie.title,
         posterPath: movie.poster_path,
@@ -50,7 +59,7 @@ export default function MovieDetailsPage() {
         releaseDate: movie.release_date,
       });
     }
-  }, [movie, addMovie]);
+  }, [movie, addRecentlyViewed]);
 
   // Handle errors
   useEffect(() => {
@@ -58,6 +67,24 @@ export default function MovieDetailsPage() {
       toast.error('Failed to load movie details');
     }
   }, [movieError]);
+
+  const handleWatchLaterToggle = () => {
+    if (!movie) return;
+
+    if (inWatchLater) {
+      removeFromWatchLater(movieId);
+      toast.success('Removed from watch later');
+    } else {
+      addToWatchLater({
+        id: movie.id,
+        title: movie.title,
+        posterPath: movie.poster_path,
+        rating: movie.vote_average,
+        releaseDate: movie.release_date,
+      });
+      toast.success('Added to watch later');
+    }
+  };
 
   if (movieLoading) {
     return (
@@ -75,7 +102,7 @@ export default function MovieDetailsPage() {
           <div className='flex flex-col md:flex-row gap-6 md:gap-8'>
             {/* Poster Skeleton */}
             <div className='w-full md:w-64 lg:w-80 shrink-0'>
-              <div className='aspect-[2/3] rounded-lg bg-muted animate-pulse shadow-2xl' />
+              <div className='aspect-2/3 rounded-lg bg-muted animate-pulse shadow-2xl' />
             </div>
 
             {/* Details Skeleton */}
@@ -133,7 +160,7 @@ export default function MovieDetailsPage() {
             <div className='flex gap-4 overflow-x-hidden'>
               {Array.from({ length: 6 }).map((_, i) => (
                 <div key={i} className='shrink-0 w-36 sm:w-44'>
-                  <div className='aspect-[2/3] bg-muted animate-pulse rounded-lg' />
+                  <div className='aspect-2/3 bg-muted animate-pulse rounded-lg' />
                   <div className='mt-2 space-y-1'>
                     <div className='h-4 bg-muted animate-pulse rounded w-3/4' />
                     <div className='h-3 bg-muted animate-pulse rounded w-1/2' />
@@ -171,6 +198,7 @@ export default function MovieDetailsPage() {
       posterUrl: getPosterUrl(movie.poster_path),
       rating: movie.vote_average,
       year: getYearFromDate(movie.release_date),
+      releaseDate: movie.release_date,
     })) || [];
 
   // Get top 10 cast members
@@ -191,7 +219,7 @@ export default function MovieDetailsPage() {
 
       {/* Backdrop */}
       <div className='relative h-[40vh] md:h-[60vh] w-full overflow-hidden'>
-        <div className='absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent z-10' />
+        <div className='absolute inset-0 bg-linear-to-t from-background via-background/50 to-transparent z-10' />
         <Image
           src={getBackdropUrl(movie.backdrop_path)}
           alt={movie.title}
@@ -206,7 +234,7 @@ export default function MovieDetailsPage() {
         <div className='flex flex-col md:flex-row gap-6 md:gap-8'>
           {/* Poster */}
           <div className='w-full md:w-64 lg:w-80 shrink-0'>
-            <div className='relative aspect-[2/3] rounded-lg overflow-hidden shadow-2xl border border-border'>
+            <div className='relative aspect-2/3 rounded-lg overflow-hidden shadow-2xl border border-border'>
               <Image
                 src={getPosterUrl(movie.poster_path, 'w500')}
                 alt={movie.title}
@@ -263,6 +291,27 @@ export default function MovieDetailsPage() {
                 </div>
               )}
             </div>
+
+            {/* Watch Later Button */}
+            {isHydrated && (
+              <button
+                onClick={handleWatchLaterToggle}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all cursor-pointer ${
+                  inWatchLater
+                    ? 'bg-primary text-white hover:bg-primary/90'
+                    : 'bg-primary/10 text-primary hover:bg-primary/20'
+                }`}
+              >
+                <Bookmark
+                  className={`h-5 w-5 ${inWatchLater ? 'fill-current' : ''}`}
+                />
+                <span>
+                  {inWatchLater
+                    ? 'Remove from Watch Later'
+                    : 'Add to Watch Later'}
+                </span>
+              </button>
+            )}
 
             {/* Genres */}
             {movie.genres.length > 0 && (

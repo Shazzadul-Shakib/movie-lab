@@ -99,6 +99,21 @@ export const getSimilarMovies = async (
   return data;
 };
 
+// Search movies by title
+export const searchMovies = async (
+  query: string,
+  page: number = 1,
+): Promise<MoviesResponse> => {
+  const { data } = await axiosInstance.get<MoviesResponse>('/search/movie', {
+    params: {
+      query,
+      page,
+      include_adult: false,
+    },
+  });
+  return data;
+};
+
 // Helper function to get backdrop URL
 export const getBackdropUrl = (
   backdropPath: string | null,

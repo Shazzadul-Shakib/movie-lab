@@ -6,6 +6,7 @@ import {
   getMovieDetails,
   getMovieCredits,
   getSimilarMovies,
+  searchMovies,
 } from '@/lib/api/tmdb';
 import type { MoviesResponse, MovieDetails, MovieCredits } from '@/types';
 
@@ -74,6 +75,19 @@ export function useSimilarMovies(
     queryKey: ['movie', 'similar', movieId, page],
     queryFn: () => getSimilarMovies(movieId, page),
     enabled: !!movieId,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+}
+
+// Search movies by title
+export function useSearchMovies(
+  query: string,
+  page: number = 1,
+): UseQueryResult<MoviesResponse, Error> {
+  return useQuery({
+    queryKey: ['movies', 'search', query, page],
+    queryFn: () => searchMovies(query, page),
+    enabled: query.length > 0,
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
 }

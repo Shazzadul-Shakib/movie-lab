@@ -4,9 +4,7 @@ import Link from 'next/link';
 import { Film } from 'lucide-react';
 import type { GenreCardData } from '@/types';
 
-interface GenreCardProps extends GenreCardData {}
-
-export function GenreCard({ name, href, movieCount }: GenreCardProps) {
+export function GenreCard({ name, href, movieCount }: GenreCardData) {
   return (
     <Link href={href} className='group cursor-pointer'>
       <div className='relative overflow-hidden rounded-lg border border-border bg-card p-4 sm:p-5 transition-all duration-300 group-hover:border-primary group-hover:shadow-lg h-24 sm:h-28 flex flex-col justify-between'>

@@ -3,7 +3,6 @@
 import { Search, Film, Menu, X } from 'lucide-react';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
 import { useSearchMovies } from '@/hooks/use-movies';
 import { getPosterUrl, getYearFromDate } from '@/lib/api/tmdb';
 import Image from 'next/image';
@@ -19,7 +18,6 @@ export function Header({ onMenuToggle }: HeaderProps) {
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [showResults, setShowResults] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
 
   const { data: searchResults, isLoading } = useSearchMovies(debouncedQuery, 1);
 
@@ -102,7 +100,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
                   setSearchQuery('');
                   setShowResults(false);
                 }}
-                className='absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors'
+                className='absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer'
               >
                 <X className='h-4 w-4' />
               </button>
@@ -212,7 +210,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
                   setSearchQuery('');
                   setShowResults(false);
                 }}
-                className='absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors'
+                className='absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer'
               >
                 <X className='h-4 w-4' />
               </button>

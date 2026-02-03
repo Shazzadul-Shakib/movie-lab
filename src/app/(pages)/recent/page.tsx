@@ -22,7 +22,7 @@ export default function Recent() {
         {movies.length > 0 && (
           <button
             onClick={clearAll}
-            className='px-4 py-2 text-sm font-medium text-destructive hover:bg-destructive/10 rounded-lg transition-colors'
+            className='px-4 py-2 text-sm font-medium text-destructive hover:bg-destructive/10 rounded-lg transition-colors cursor-pointer'
           >
             Clear All
           </button>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Star, Bookmark } from 'lucide-react';
@@ -26,9 +26,7 @@ export function MovieCard({
   releaseDate = '',
   size = 'medium',
 }: MovieCardProps) {
-  const [isHydrated, setIsHydrated] = useState(
-    () => typeof window !== 'undefined',
-  );
+  const [isHydrated] = useState(() => typeof window !== 'undefined');
   const addMovie = useWatchLaterStore((state) => state.addMovie);
   const removeMovie = useWatchLaterStore((state) => state.removeMovie);
   const watchLaterMovies = useWatchLaterStore((state) => state.movies);
@@ -56,12 +54,6 @@ export function MovieCard({
         releaseDate,
       });
     }
-  };
-
-  const sizeClasses = {
-    small: 'w-32 sm:w-36',
-    medium: 'w-36 sm:w-44 md:w-48',
-    large: 'w-44 sm:w-52 md:w-56',
   };
 
   const imageHeight = {

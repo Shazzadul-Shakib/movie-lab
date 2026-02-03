@@ -1,7 +1,5 @@
 import axiosInstance from './axios';
 import type {
-  Movie,
-  Genre,
   MoviesResponse,
   GenresResponse,
   MovieDetails,
@@ -38,12 +36,13 @@ export const getPopularMovies = async (
 export const getMoviesByGenre = async (
   genreId: number,
   page: number = 1,
+  sortBy: string = 'popularity.desc',
 ): Promise<MoviesResponse> => {
   const { data } = await axiosInstance.get<MoviesResponse>('/discover/movie', {
     params: {
       with_genres: genreId,
       page,
-      sort_by: 'popularity.desc',
+      sort_by: sortBy,
     },
   });
   return data;

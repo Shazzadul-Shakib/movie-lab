@@ -33,10 +33,11 @@ export function usePopularMovies(
 export function useMoviesByGenre(
   genreId: number,
   page: number = 1,
+  sortBy: string = 'popularity.desc',
 ): UseQueryResult<MoviesResponse, Error> {
   return useQuery({
-    queryKey: ['movies', 'genre', genreId, page],
-    queryFn: () => getMoviesByGenre(genreId, page),
+    queryKey: ['movies', 'genre', genreId, page, sortBy],
+    queryFn: () => getMoviesByGenre(genreId, page, sortBy),
     enabled: !!genreId,
     staleTime: 1000 * 60 * 5, // 5 minutes
   });

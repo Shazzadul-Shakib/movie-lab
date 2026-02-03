@@ -5,12 +5,6 @@ interface MovieCardSkeletonProps {
 }
 
 export function MovieCardSkeleton({ size = 'medium' }: MovieCardSkeletonProps) {
-  const sizeClasses = {
-    small: 'w-32 sm:w-36',
-    medium: 'w-36 sm:w-44 md:w-48',
-    large: 'w-44 sm:w-52 md:w-56',
-  };
-
   const imageHeight = {
     small: 'h-48 sm:h-54',
     medium: 'h-54 sm:h-64 md:h-72',

@@ -27,9 +27,7 @@ import { toast } from 'sonner';
 export default function MovieDetailsPage() {
   const params = useParams();
   const movieId = Number(params.id);
-  const [isHydrated, setIsHydrated] = useState(
-    () => typeof window !== 'undefined',
-  );
+  const [isHydrated] = useState(() => typeof window !== 'undefined');
   const addRecentlyViewed = useRecentlyViewedStore((state) => state.addMovie);
   const addToWatchLater = useWatchLaterStore((state) => state.addMovie);
   const removeFromWatchLater = useWatchLaterStore((state) => state.removeMovie);

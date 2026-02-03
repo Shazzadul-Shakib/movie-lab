@@ -3,7 +3,12 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
+  ArrowUpDown,
+} from 'lucide-react';
 import { useMoviesByGenre } from '@/hooks/use-movies';
 import { useGenres } from '@/hooks/use-genres';
 import { MovieCard } from '@/components/movie/movie-card';
@@ -11,17 +16,29 @@ import { MovieCardSkeleton } from '@/components/skeleton/movie-card-skeleton';
 import { getPosterUrl, getYearFromDate } from '@/lib/api/tmdb';
 import { toast } from 'sonner';
 
+const sortOptions = [
+  { value: 'popularity.desc', label: 'Popularity (High to Low)' },
+  { value: 'popularity.asc', label: 'Popularity (Low to High)' },
+  { value: 'release_date.desc', label: 'Release Date (Newest)' },
+  { value: 'release_date.asc', label: 'Release Date (Oldest)' },
+  { value: 'vote_average.desc', label: 'Rating (High to Low)' },
+  { value: 'vote_average.asc', label: 'Rating (Low to High)' },
+  { value: 'title.asc', label: 'Title (A-Z)' },
+  { value: 'title.desc', label: 'Title (Z-A)' },
+];
+
 export default function GenrePage() {
   const params = useParams();
   const genreId = Number(params.id);
   const [page, setPage] = useState(1);
+  const [sortBy, setSortBy] = useState('popularity.desc');
 
   const { data: genresData } = useGenres();
   const {
     data: moviesData,
     isLoading,
     error,
-  } = useMoviesByGenre(genreId, page);
+  } = useMoviesByGenre(genreId, page, sortBy);
 
   const genre = genresData?.genres.find((g) => g.id === genreId);
 
@@ -31,10 +48,10 @@ export default function GenrePage() {
     }
   }, [error]);
 
-  // Scroll to top on page change
+  // Scroll to top on page or sort change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [page]);
+  }, [page, sortBy]);
 
   if (!genre && !isLoading) {
     return (
@@ -67,15 +84,36 @@ export default function GenrePage() {
           Back to home
         </Link>
 
-        <div>
-          <h1 className='text-3xl md:text-4xl font-bold text-foreground'>
-            {genre?.name || 'Loading...'}
-          </h1>
-          <p className='text-muted-foreground mt-2'>
-            {moviesData?.total_results
-              ? `${moviesData.total_results.toLocaleString()} movies found`
-              : 'Explore movies in this genre'}
-          </p>
+        <div className='flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4'>
+          <div>
+            <h1 className='text-3xl md:text-4xl font-bold text-foreground'>
+              {genre?.name || 'Loading...'}
+            </h1>
+            <p className='text-muted-foreground mt-2'>
+              {moviesData?.total_results
+                ? `${moviesData.total_results.toLocaleString()} movies found`
+                : 'Explore movies in this genre'}
+            </p>
+          </div>
+
+          {/* Sort Dropdown */}
+          <div className='flex items-center gap-2'>
+            <ArrowUpDown className='h-4 w-4 mr-2 text-muted-foreground shrink-0' />
+            <select
+              value={sortBy}
+              onChange={(e) => {
+                setSortBy(e.target.value);
+                setPage(1); // Reset to first page on sort change
+              }}
+              className='px-3 py-2 rounded-lg border border-input bg-muted text-foreground text-sm outline-none transition-all focus:border-ring focus:bg-card focus:ring-2 focus:ring-ring/30 cursor-pointer min-w-[200px]'
+            >
+              {sortOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
@@ -123,7 +161,7 @@ export default function GenrePage() {
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
-            className='flex items-center gap-1 px-3 py-2 rounded-lg bg-card border border-border text-sm font-medium transition-colors hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed'
+            className='flex items-center gap-1 px-3 py-2 rounded-lg bg-card border border-border text-sm font-medium transition-colors hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer'
           >
             <ChevronLeft className='h-4 w-4' />
             Previous
@@ -156,7 +194,7 @@ export default function GenrePage() {
                     <>
                       <button
                         onClick={() => setPage(1)}
-                        className='px-3 py-2 rounded-lg bg-card border border-border text-sm font-medium transition-colors hover:bg-muted'
+                        className='px-3 py-2 rounded-lg bg-card border border-border text-sm font-medium transition-colors hover:bg-muted cursor-pointer'
                       >
                         1
                       </button>
@@ -171,7 +209,7 @@ export default function GenrePage() {
                     <button
                       key={pageNum}
                       onClick={() => setPage(pageNum)}
-                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
                         page === pageNum
                           ? 'bg-primary text-white'
                           : 'bg-card border border-border hover:bg-muted'
@@ -189,7 +227,7 @@ export default function GenrePage() {
                       )}
                       <button
                         onClick={() => setPage(totalPages)}
-                        className='px-3 py-2 rounded-lg bg-card border border-border text-sm font-medium transition-colors hover:bg-muted'
+                        className='px-3 py-2 rounded-lg bg-card border border-border text-sm font-medium transition-colors hover:bg-muted cursor-pointer'
                       >
                         {totalPages}
                       </button>
@@ -203,7 +241,7 @@ export default function GenrePage() {
           <button
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page === totalPages}
-            className='flex items-center gap-1 px-3 py-2 rounded-lg bg-card border border-border text-sm font-medium transition-colors hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed'
+            className='flex items-center gap-1 px-3 py-2 rounded-lg bg-card border border-border text-sm font-medium transition-colors hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer'
           >
             Next
             <ChevronRight className='h-4 w-4' />

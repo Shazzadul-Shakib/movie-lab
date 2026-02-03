@@ -94,7 +94,6 @@ export default function Home() {
         <SectionHeader
           title='Top Rated Movies'
           subtitle='The highest-rated films of all time'
-          viewAllHref='/top-rated'
         />
         {isLoadingTopRated ? (
           <div className='flex gap-6 overflow-x-auto pb-4'>
@@ -118,7 +117,6 @@ export default function Home() {
           <SectionHeader
             title={`Popular ${genre1.name} Movies`}
             subtitle={`Top ${genre1.name.toLowerCase()} films you'll love`}
-            viewAllHref={`/genre/${genre1.id}`}
           />
           {isLoadingGenre1 ? (
             <div className='flex gap-6 overflow-x-auto pb-4'>
@@ -142,7 +140,6 @@ export default function Home() {
           <SectionHeader
             title={`Popular ${genre2.name} Movies`}
             subtitle={`Top ${genre2.name.toLowerCase()} films you'll love`}
-            viewAllHref={`/genre/${genre2.id}`}
           />
           {isLoadingGenre2 ? (
             <div className='flex gap-6 overflow-x-auto pb-4'>
@@ -166,7 +163,6 @@ export default function Home() {
           <SectionHeader
             title={`Popular ${genre3.name} Movies`}
             subtitle={`Top ${genre3.name.toLowerCase()} films you'll love`}
-            viewAllHref={`/genre/${genre3.id}`}
           />
           {isLoadingGenre3 ? (
             <div className='flex gap-6 overflow-x-auto pb-4'>

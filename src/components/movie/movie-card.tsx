@@ -71,10 +71,7 @@ export function MovieCard({
   };
 
   return (
-    <Link
-      href={`/movie/${id}`}
-      className={`${sizeClasses[size]} flex-shrink-0 group cursor-pointer block`}
-    >
+    <Link href={`/movie/${id}`} className='w-full group cursor-pointer block'>
       <div className='relative overflow-hidden rounded-lg bg-muted transition-transform duration-300 group-hover:scale-105 group-hover:shadow-xl h-full'>
         {/* Movie Poster */}
         <div className={`relative ${imageHeight[size]} w-full overflow-hidden`}>

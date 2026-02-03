@@ -42,9 +42,9 @@ export default function WatchLater() {
           </div>
         </div>
       ) : (
-        <div className='grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-6'>
+        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6'>
           {movies.map((movie) => (
-            <div key={movie.id} className='w-full'>
+            <div key={movie.id} className='w-full max-w-[240px] mx-auto'>
               <MovieCard
                 id={movie.id}
                 title={movie.title}
@@ -52,7 +52,6 @@ export default function WatchLater() {
                 rating={movie.rating}
                 year={getYearFromDate(movie.releaseDate)}
                 releaseDate={movie.releaseDate}
-                size='small'
               />
             </div>
           ))}

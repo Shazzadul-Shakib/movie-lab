@@ -99,7 +99,9 @@ export default function Home() {
         {isLoadingTopRated ? (
           <div className='flex gap-6 overflow-x-auto pb-4'>
             {Array.from({ length: 6 }).map((_, i) => (
-              <MovieCardSkeleton key={i} size='medium' />
+              <div key={i} className='w-36 sm:w-44 md:w-48 flex-shrink-0'>
+                <MovieCardSkeleton size='medium' />
+              </div>
             ))}
           </div>
         ) : (
@@ -121,7 +123,9 @@ export default function Home() {
           {isLoadingGenre1 ? (
             <div className='flex gap-6 overflow-x-auto pb-4'>
               {Array.from({ length: 5 }).map((_, i) => (
-                <MovieCardSkeleton key={i} size='medium' />
+                <div key={i} className='w-36 sm:w-44 md:w-48 flex-shrink-0'>
+                  <MovieCardSkeleton size='medium' />
+                </div>
               ))}
             </div>
           ) : (
@@ -143,7 +147,9 @@ export default function Home() {
           {isLoadingGenre2 ? (
             <div className='flex gap-6 overflow-x-auto pb-4'>
               {Array.from({ length: 5 }).map((_, i) => (
-                <MovieCardSkeleton key={i} size='medium' />
+                <div key={i} className='w-36 sm:w-44 md:w-48 flex-shrink-0'>
+                  <MovieCardSkeleton size='medium' />
+                </div>
               ))}
             </div>
           ) : (
@@ -165,7 +171,9 @@ export default function Home() {
           {isLoadingGenre3 ? (
             <div className='flex gap-6 overflow-x-auto pb-4'>
               {Array.from({ length: 5 }).map((_, i) => (
-                <MovieCardSkeleton key={i} size='medium' />
+                <div key={i} className='w-36 sm:w-44 md:w-48 flex-shrink-0'>
+                  <MovieCardSkeleton size='medium' />
+                </div>
               ))}
             </div>
           ) : (

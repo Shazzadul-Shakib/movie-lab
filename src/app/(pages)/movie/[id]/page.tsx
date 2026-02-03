@@ -393,7 +393,7 @@ export default function MovieDetailsPage() {
             </h2>
             <div className='flex gap-6 overflow-x-auto pb-4'>
               {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className='shrink-0'>
+                <div key={i} className='w-32 sm:w-36 flex-shrink-0'>
                   <MovieCardSkeleton size='small' />
                 </div>
               ))}

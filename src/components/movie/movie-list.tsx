@@ -9,20 +9,27 @@ interface MovieListProps {
 }
 
 export function MovieList({ movies, size = 'medium' }: MovieListProps) {
+  const sizeClasses = {
+    small: 'w-32 sm:w-36',
+    medium: 'w-36 sm:w-44 md:w-48',
+    large: 'w-44 sm:w-52 md:w-56',
+  };
+
   return (
     <div className='relative'>
       <div className='flex gap-6 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-transparent hover:scrollbar-thumb-muted-foreground/40'>
         {movies.map((movie) => (
-          <MovieCard
-            key={movie.id}
-            id={movie.id}
-            title={movie.title}
-            posterUrl={movie.posterUrl}
-            rating={movie.rating}
-            year={movie.year}
-            releaseDate={movie.releaseDate}
-            size={size}
-          />
+          <div key={movie.id} className={`${sizeClasses[size]} flex-shrink-0`}>
+            <MovieCard
+              id={movie.id}
+              title={movie.title}
+              posterUrl={movie.posterUrl}
+              rating={movie.rating}
+              year={movie.year}
+              releaseDate={movie.releaseDate}
+              size={size}
+            />
+          </div>
         ))}
       </div>
     </div>

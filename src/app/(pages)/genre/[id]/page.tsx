@@ -81,9 +81,9 @@ export default function GenrePage() {
 
       {/* Movies Grid */}
       {isLoading ? (
-        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 justify-items-center'>
+        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6'>
           {Array.from({ length: 20 }).map((_, i) => (
-            <div key={i} className='w-full'>
+            <div key={i} className='w-full max-w-[240px] mx-auto'>
               <MovieCardSkeleton />
             </div>
           ))}
@@ -100,9 +100,9 @@ export default function GenrePage() {
           </div>
         </div>
       ) : (
-        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 justify-items-center'>
+        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6'>
           {movies.map((movie) => (
-            <div key={movie.id} className='w-full'>
+            <div key={movie.id} className='w-full max-w-[240px] mx-auto'>
               <MovieCard
                 id={movie.id}
                 title={movie.title}

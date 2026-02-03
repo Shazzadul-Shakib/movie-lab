@@ -1,39 +1,12 @@
 'use client';
 
-import { useState } from 'react';
 import { useRecentlyViewedStore } from '@/store/recently-viewed';
 import { MovieCard } from '@/components/movie/movie-card';
-import { MovieCardSkeleton } from '@/components/skeleton/movie-card-skeleton';
 import { getPosterUrl, getYearFromDate } from '@/lib/api/tmdb';
 
 export default function Recent() {
-  const [isHydrated] = useState(() => typeof window !== 'undefined');
   const movies = useRecentlyViewedStore((state) => state.movies);
   const clearAll = useRecentlyViewedStore((state) => state.clearAll);
-
-  if (!isHydrated) {
-    return (
-      <div className='space-y-6'>
-        <div className='flex items-center justify-between'>
-          <div>
-            <h1 className='text-3xl md:text-4xl font-bold text-foreground'>
-              Recently Viewed
-            </h1>
-            <p className='text-muted-foreground mt-2'>
-              Your viewing history from most recent
-            </p>
-          </div>
-        </div>
-        <div className='grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-6'>
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className='w-full'>
-              <MovieCardSkeleton size='small' />
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className='space-y-6'>
@@ -69,9 +42,9 @@ export default function Recent() {
           </div>
         </div>
       ) : (
-        <div className='grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-6'>
+        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6'>
           {movies.map((movie) => (
-            <div key={movie.id} className='w-full'>
+            <div key={movie.id} className='w-full max-w-[240px] mx-auto'>
               <MovieCard
                 id={movie.id}
                 title={movie.title}
@@ -79,7 +52,6 @@ export default function Recent() {
                 rating={movie.rating}
                 year={getYearFromDate(movie.releaseDate)}
                 releaseDate={movie.releaseDate}
-                size='small'
               />
             </div>
           ))}

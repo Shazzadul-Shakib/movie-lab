@@ -64,14 +64,14 @@ export function MovieCard({
 
   return (
     <Link href={`/movie/${id}`} className='w-full group cursor-pointer block'>
-      <div className='relative overflow-hidden rounded-lg bg-muted transition-transform duration-300 group-hover:scale-105 group-hover:shadow-xl h-full'>
+      <div className='relative overflow-hidden rounded-lg bg-muted transition-shadow duration-300 group-hover:shadow-xl h-full'>
         {/* Movie Poster */}
         <div className={`relative ${imageHeight[size]} w-full overflow-hidden`}>
           <Image
             src={fullPosterUrl}
             alt={title}
             fill
-            className='object-cover transition-opacity duration-300 group-hover:opacity-80'
+            className='object-cover transition-transform duration-300 group-hover:scale-110'
             sizes='(max-width: 640px) 144px, (max-width: 768px) 176px, 192px'
           />
           {/* Rating Badge */}

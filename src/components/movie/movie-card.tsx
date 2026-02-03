@@ -33,9 +33,11 @@ export function MovieCard({
   const removeMovie = useWatchLaterStore((state) => state.removeMovie);
   const watchLaterMovies = useWatchLaterStore((state) => state.movies);
   const inWatchLater = isHydrated && watchLaterMovies.some((m) => m.id === id);
-  
+
   // Get full poster URL
-  const fullPosterUrl = posterUrl ? `https://image.tmdb.org/t/p/w500${posterUrl}` : '/placeholder-movie.png';
+  const fullPosterUrl = posterUrl
+    ? `https://image.tmdb.org/t/p/w500${posterUrl}`
+    : '/placeholder-movie.png';
 
   const handleWatchLaterClick = (e: React.MouseEvent) => {
     e.preventDefault();

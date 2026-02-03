@@ -18,7 +18,7 @@ export function MovieCardSkeleton({ size = 'medium' }: MovieCardSkeletonProps) {
   };
 
   return (
-    <div className={`${sizeClasses[size]} animate-pulse block`}>
+    <div className={`${sizeClasses[size]} shrink-0 animate-pulse block`}>
       <div className='overflow-hidden rounded-lg bg-muted h-full'>
         {/* Image Skeleton */}
         <div className={`${imageHeight[size]} w-full bg-muted-foreground/10`} />

@@ -11,7 +11,7 @@ interface MovieListProps {
 export function MovieList({ movies, size = 'medium' }: MovieListProps) {
   return (
     <div className='relative'>
-      <div className='flex gap-3 sm:gap-4 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-transparent hover:scrollbar-thumb-muted-foreground/40'>
+      <div className='flex gap-6 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-transparent hover:scrollbar-thumb-muted-foreground/40'>
         {movies.map((movie) => (
           <MovieCard
             key={movie.id}

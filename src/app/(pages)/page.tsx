@@ -97,7 +97,7 @@ export default function Home() {
           viewAllHref='/top-rated'
         />
         {isLoadingTopRated ? (
-          <div className='flex gap-3 sm:gap-4 overflow-x-auto pb-4'>
+          <div className='flex gap-6 overflow-x-auto pb-4'>
             {Array.from({ length: 6 }).map((_, i) => (
               <MovieCardSkeleton key={i} size='medium' />
             ))}
@@ -119,7 +119,7 @@ export default function Home() {
             viewAllHref={`/genre/${genre1.id}`}
           />
           {isLoadingGenre1 ? (
-            <div className='flex gap-3 sm:gap-4 overflow-x-auto pb-4'>
+            <div className='flex gap-6 overflow-x-auto pb-4'>
               {Array.from({ length: 5 }).map((_, i) => (
                 <MovieCardSkeleton key={i} size='medium' />
               ))}
@@ -141,7 +141,7 @@ export default function Home() {
             viewAllHref={`/genre/${genre2.id}`}
           />
           {isLoadingGenre2 ? (
-            <div className='flex gap-3 sm:gap-4 overflow-x-auto pb-4'>
+            <div className='flex gap-6 overflow-x-auto pb-4'>
               {Array.from({ length: 5 }).map((_, i) => (
                 <MovieCardSkeleton key={i} size='medium' />
               ))}
@@ -163,7 +163,7 @@ export default function Home() {
             viewAllHref={`/genre/${genre3.id}`}
           />
           {isLoadingGenre3 ? (
-            <div className='flex gap-3 sm:gap-4 overflow-x-auto pb-4'>
+            <div className='flex gap-6 overflow-x-auto pb-4'>
               {Array.from({ length: 5 }).map((_, i) => (
                 <MovieCardSkeleton key={i} size='medium' />
               ))}
@@ -184,13 +184,13 @@ export default function Home() {
           subtitle='Explore movies across all categories'
         />
         {isLoadingGenres ? (
-          <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4'>
+          <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
             {Array.from({ length: 12 }).map((_, i) => (
               <GenreCardSkeleton key={i} />
             ))}
           </div>
         ) : (
-          <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4'>
+          <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
             {genresData?.genres.map((genre) => (
               <GenreCard
                 key={genre.id}

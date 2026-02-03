@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, Clock, Heart } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 
 const genres = [
   { name: 'Action', href: '/genre/action' },
@@ -23,11 +24,52 @@ const mainLinks = [
   { name: 'Watch Later', icon: Heart, href: '/watch-later' },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
+  const previousPathname = useRef(pathname);
+
+  // Close sidebar when route changes on mobile (only if pathname actually changed)
+  useEffect(() => {
+    if (previousPathname.current !== pathname && isOpen) {
+      onClose();
+      previousPathname.current = pathname;
+    }
+  }, [pathname, isOpen, onClose]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
 
   return (
-    <aside className='fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 border-r border-border bg-card flex flex-col'>
+    <>
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div
+          className='fixed inset-0 bg-black/80 z-40 lg:hidden cursor-pointer'
+          onClick={onClose}
+          aria-hidden='true'
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={`fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 border-r border-border bg-card flex flex-col z-40 transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
       {/* Main Navigation - Static */}
       <div className='p-4 pb-0'>
         <nav className='flex flex-col gap-1'>
@@ -38,7 +80,7 @@ export function Sidebar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 cursor-pointer ${
                   isActive
                     ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md'
                     : 'text-foreground hover:bg-primary/20 hover:text-primary'
@@ -66,7 +108,7 @@ export function Sidebar() {
                   <Link
                     key={genre.href}
                     href={genre.href}
-                    className={`rounded-lg px-3 py-2 text-sm transition-all duration-200 ${
+                    className={`rounded-lg px-3 py-2 text-sm transition-all duration-200 cursor-pointer ${
                       isActive
                         ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md'
                         : 'text-muted-foreground hover:bg-primary/20 hover:text-primary'
@@ -88,5 +130,6 @@ export function Sidebar() {
         </p>
       </div>
     </aside>
+    </>
   );
 }

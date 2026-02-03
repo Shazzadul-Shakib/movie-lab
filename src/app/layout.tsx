@@ -1,10 +1,12 @@
-import type { Metadata } from 'next';
+'use client';
+
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import { Header } from '@/components/layout/header';
 import { Sidebar } from '@/components/layout/sidebar';
 import { MainContent } from '@/components/layout/main-content';
+import { useState, useCallback } from 'react';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -16,18 +18,27 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-export const metadata: Metadata = {
-  title: 'MovieLab',
-  description: 'Discover and Explore Movies Seamlessly',
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const handleMenuToggle = useCallback(() => {
+    setSidebarOpen(prev => !prev);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setSidebarOpen(false);
+  }, []);
+
   return (
     <html lang='en' suppressHydrationWarning>
+      <head>
+        <title>MovieLab - Discover and Explore Movies Seamlessly</title>
+        <meta name="description" content="Discover and Explore Movies Seamlessly" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
@@ -38,8 +49,8 @@ export default function RootLayout({
           disableTransitionOnChange
           storageKey='movielab-theme'
         >
-          <Header />
-          <Sidebar />
+          <Header onMenuToggle={handleMenuToggle} />
+          <Sidebar isOpen={sidebarOpen} onClose={handleClose} />
           <MainContent>{children}</MainContent>
         </ThemeProvider>
       </body>

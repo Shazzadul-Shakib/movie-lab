@@ -29,7 +29,7 @@ export function ThemeToggle() {
       type='button'
       onClick={() => setTheme(nextTheme)}
       aria-label={label}
-      className='flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-0'
+      className='flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-0 cursor-pointer'
     >
       <Icon size={18} />
     </button>

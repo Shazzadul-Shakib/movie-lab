@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Star } from 'lucide-react';
+import type { MovieCardSize } from '@/types';
 
 interface MovieCardProps {
   id: number;
@@ -10,7 +11,7 @@ interface MovieCardProps {
   posterUrl: string;
   rating: number;
   year: number;
-  size?: 'small' | 'medium' | 'large';
+  size?: MovieCardSize;
 }
 
 export function MovieCard({

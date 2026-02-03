@@ -1,203 +1,91 @@
+'use client';
+
 import { SectionHeader } from '@/components/section/section-header';
 import { MovieList } from '@/components/movie/movie-list';
 import { GenreCard } from '@/components/genre/genre-card';
-
-// Mock data - Replace with API calls later
-const topRatedMovies = [
-  {
-    id: 1,
-    title: 'The Shawshank Redemption',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg',
-    rating: 9.3,
-    year: 1994,
-  },
-  {
-    id: 2,
-    title: 'The Godfather',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg',
-    rating: 9.2,
-    year: 1972,
-  },
-  {
-    id: 3,
-    title: 'The Dark Knight',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg',
-    rating: 9.0,
-    year: 2008,
-  },
-  {
-    id: 4,
-    title: 'Pulp Fiction',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg',
-    rating: 8.9,
-    year: 1994,
-  },
-  {
-    id: 5,
-    title: 'Forrest Gump',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/arw2vcBveWOVZr6pxd9XTd1TdQa.jpg',
-    rating: 8.8,
-    year: 1994,
-  },
-  {
-    id: 6,
-    title: 'Inception',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg',
-    rating: 8.8,
-    year: 2010,
-  },
-];
-
-const actionMovies = [
-  {
-    id: 11,
-    title: 'Mad Max: Fury Road',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/hA2ple9q4qnwxp3hKVNhroipsir.jpg',
-    rating: 8.1,
-    year: 2015,
-  },
-  {
-    id: 12,
-    title: 'John Wick',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/fZPSd91yGE9fCcCe6OoQr6E3Bev.jpg',
-    rating: 7.4,
-    year: 2014,
-  },
-  {
-    id: 13,
-    title: 'Die Hard',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/yFihWxQcmqcaBR31QM6Y8gT6aYV.jpg',
-    rating: 8.2,
-    year: 1988,
-  },
-  {
-    id: 14,
-    title: 'The Matrix',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg',
-    rating: 8.7,
-    year: 1999,
-  },
-  {
-    id: 15,
-    title: 'Gladiator',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg',
-    rating: 8.5,
-    year: 2000,
-  },
-];
-
-const comedyMovies = [
-  {
-    id: 21,
-    title: 'The Grand Budapest Hotel',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/eWdyYQreja6JGCzqHWXpWHDrrPo.jpg',
-    rating: 8.1,
-    year: 2014,
-  },
-  {
-    id: 22,
-    title: 'Superbad',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/ek8e8txUyUwd2BNqj6lFEerJfbq.jpg',
-    rating: 7.6,
-    year: 2007,
-  },
-  {
-    id: 23,
-    title: 'The Hangover',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/wSA4zOk4mGxBoAqy2TxbYCBRRYE.jpg',
-    rating: 7.7,
-    year: 2009,
-  },
-  {
-    id: 24,
-    title: 'Groundhog Day',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/gCgt1WARPZaXnq523ySQEUKinCs.jpg',
-    rating: 8.0,
-    year: 1993,
-  },
-  {
-    id: 25,
-    title: 'Mean Girls',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/fXm3YKXAEjx7d2tIWDg9TfRZtsU.jpg',
-    rating: 7.1,
-    year: 2004,
-  },
-];
-
-const dramaMovies = [
-  {
-    id: 31,
-    title: '12 Angry Men',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/ow3wq89wM8qd5X7hWKxiRfsFf9C.jpg',
-    rating: 9.0,
-    year: 1957,
-  },
-  {
-    id: 32,
-    title: "Schindler's List",
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg',
-    rating: 9.0,
-    year: 1993,
-  },
-  {
-    id: 33,
-    title: 'Fight Club',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg',
-    rating: 8.8,
-    year: 1999,
-  },
-  {
-    id: 34,
-    title: 'The Green Mile',
-    posterUrl:
-      'https://image.tmdb.org/t/p/w500/velWPhVMQeQKcxggNEU8YmIo52R.jpg',
-    rating: 8.6,
-    year: 1999,
-  },
-  {
-    id: 35,
-    title: 'Good Will Hunting',
-    posterUrl: 'https://image.tmdb.org/t/p/w500/bABCBKYBK7A5G1x0FzoeoNfuj2.jpg',
-    rating: 8.3,
-    year: 1997,
-  },
-];
-
-const genres = [
-  { name: 'Action', href: '/genre/action', movieCount: 1250 },
-  { name: 'Comedy', href: '/genre/comedy', movieCount: 980 },
-  { name: 'Drama', href: '/genre/drama', movieCount: 1560 },
-  { name: 'Horror', href: '/genre/horror', movieCount: 760 },
-  { name: 'Sci-Fi', href: '/genre/scifi', movieCount: 620 },
-  { name: 'Thriller', href: '/genre/thriller', movieCount: 890 },
-  { name: 'Romance', href: '/genre/romance', movieCount: 540 },
-  { name: 'Animation', href: '/genre/animation', movieCount: 450 },
-  { name: 'Adventure', href: '/genre/adventure', movieCount: 720 },
-  { name: 'Fantasy', href: '/genre/fantasy', movieCount: 580 },
-  { name: 'Crime', href: '/genre/crime', movieCount: 670 },
-  { name: 'Mystery', href: '/genre/mystery', movieCount: 410 },
-];
+import { MovieCardSkeleton } from '@/components/skeleton/movie-card-skeleton';
+import { GenreCardSkeleton } from '@/components/skeleton/genre-card-skeleton';
+import { useTopRatedMovies, useMoviesByGenre } from '@/hooks/use-movies';
+import { useGenres } from '@/hooks/use-genres';
+import { getPosterUrl, getYearFromDate } from '@/lib/api/tmdb';
+import { useEffect } from 'react';
+import { toast } from 'sonner';
+import type { Movie, MovieCardData } from '@/types';
 
 export default function Home() {
+  const {
+    data: topRatedData,
+    isLoading: isLoadingTopRated,
+    error: topRatedError,
+  } = useTopRatedMovies();
+  const {
+    data: genresData,
+    isLoading: isLoadingGenres,
+    error: genresError,
+  } = useGenres();
+
+  // Get popular movies for first 3 genres
+  const genre1 = genresData?.genres?.[0];
+  const genre2 = genresData?.genres?.[1];
+  const genre3 = genresData?.genres?.[2];
+
+  const {
+    data: genre1Movies,
+    isLoading: isLoadingGenre1,
+    error: genre1Error,
+  } = useMoviesByGenre(genre1?.id || 0);
+  const {
+    data: genre2Movies,
+    isLoading: isLoadingGenre2,
+    error: genre2Error,
+  } = useMoviesByGenre(genre2?.id || 0);
+  const {
+    data: genre3Movies,
+    isLoading: isLoadingGenre3,
+    error: genre3Error,
+  } = useMoviesByGenre(genre3?.id || 0);
+
+  // Show error toasts
+  useEffect(() => {
+    if (topRatedError) {
+      toast.error('Failed to load top rated movies');
+    }
+    if (genresError) {
+      toast.error('Failed to load genres');
+    }
+    if (genre1Error) {
+      toast.error(`Failed to load ${genre1?.name} movies`);
+    }
+    if (genre2Error) {
+      toast.error(`Failed to load ${genre2?.name} movies`);
+    }
+    if (genre3Error) {
+      toast.error(`Failed to load ${genre3?.name} movies`);
+    }
+  }, [
+    topRatedError,
+    genresError,
+    genre1Error,
+    genre2Error,
+    genre3Error,
+    genre1?.name,
+    genre2?.name,
+    genre3?.name,
+  ]);
+
+  // Transform API data to component format
+  const transformMovies = (movies: Movie[]): MovieCardData[] => {
+    return (
+      movies?.slice(0, 10).map((movie) => ({
+        id: movie.id,
+        title: movie.title,
+        posterUrl: getPosterUrl(movie.poster_path),
+        rating: movie.vote_average,
+        year: getYearFromDate(movie.release_date),
+      })) || []
+    );
+  };
+
   return (
     <div className='space-y-8 sm:space-y-10 md:space-y-12'>
       {/* Top Rated Movies Section */}
@@ -207,38 +95,86 @@ export default function Home() {
           subtitle='The highest-rated films of all time'
           viewAllHref='/top-rated'
         />
-        <MovieList movies={topRatedMovies} size='medium' />
+        {isLoadingTopRated ? (
+          <div className='flex gap-3 sm:gap-4 overflow-x-auto pb-4'>
+            {Array.from({ length: 6 }).map((_, i) => (
+              <MovieCardSkeleton key={i} size='medium' />
+            ))}
+          </div>
+        ) : (
+          <MovieList
+            movies={transformMovies(topRatedData?.results || [])}
+            size='medium'
+          />
+        )}
       </section>
 
-      {/* Action Movies Section */}
-      <section>
-        <SectionHeader
-          title='Popular Action Movies'
-          subtitle='Explosive entertainment and thrilling adventures'
-          viewAllHref='/genre/action'
-        />
-        <MovieList movies={actionMovies} size='medium' />
-      </section>
+      {/* Popular Movies by Genre Sections */}
+      {genre1 && (
+        <section>
+          <SectionHeader
+            title={`Popular ${genre1.name} Movies`}
+            subtitle={`Top ${genre1.name.toLowerCase()} films you'll love`}
+            viewAllHref={`/genre/${genre1.id}`}
+          />
+          {isLoadingGenre1 ? (
+            <div className='flex gap-3 sm:gap-4 overflow-x-auto pb-4'>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <MovieCardSkeleton key={i} size='medium' />
+              ))}
+            </div>
+          ) : (
+            <MovieList
+              movies={transformMovies(genre1Movies?.results || []).slice(0, 5)}
+              size='medium'
+            />
+          )}
+        </section>
+      )}
 
-      {/* Comedy Movies Section */}
-      <section>
-        <SectionHeader
-          title='Popular Comedy Movies'
-          subtitle='Laugh out loud with these hilarious films'
-          viewAllHref='/genre/comedy'
-        />
-        <MovieList movies={comedyMovies} size='medium' />
-      </section>
+      {genre2 && (
+        <section>
+          <SectionHeader
+            title={`Popular ${genre2.name} Movies`}
+            subtitle={`Top ${genre2.name.toLowerCase()} films you'll love`}
+            viewAllHref={`/genre/${genre2.id}`}
+          />
+          {isLoadingGenre2 ? (
+            <div className='flex gap-3 sm:gap-4 overflow-x-auto pb-4'>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <MovieCardSkeleton key={i} size='medium' />
+              ))}
+            </div>
+          ) : (
+            <MovieList
+              movies={transformMovies(genre2Movies?.results || []).slice(0, 5)}
+              size='medium'
+            />
+          )}
+        </section>
+      )}
 
-      {/* Drama Movies Section */}
-      <section>
-        <SectionHeader
-          title='Popular Drama Movies'
-          subtitle='Powerful stories that touch the heart'
-          viewAllHref='/genre/drama'
-        />
-        <MovieList movies={dramaMovies} size='medium' />
-      </section>
+      {genre3 && (
+        <section>
+          <SectionHeader
+            title={`Popular ${genre3.name} Movies`}
+            subtitle={`Top ${genre3.name.toLowerCase()} films you'll love`}
+            viewAllHref={`/genre/${genre3.id}`}
+          />
+          {isLoadingGenre3 ? (
+            <div className='flex gap-3 sm:gap-4 overflow-x-auto pb-4'>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <MovieCardSkeleton key={i} size='medium' />
+              ))}
+            </div>
+          ) : (
+            <MovieList
+              movies={transformMovies(genre3Movies?.results || []).slice(0, 5)}
+              size='medium'
+            />
+          )}
+        </section>
+      )}
 
       {/* All Genres Section */}
       <section>
@@ -246,16 +182,23 @@ export default function Home() {
           title='Browse by Genre'
           subtitle='Explore movies across all categories'
         />
-        <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4'>
-          {genres.map((genre) => (
-            <GenreCard
-              key={genre.name}
-              name={genre.name}
-              href={genre.href}
-              movieCount={genre.movieCount}
-            />
-          ))}
-        </div>
+        {isLoadingGenres ? (
+          <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4'>
+            {Array.from({ length: 12 }).map((_, i) => (
+              <GenreCardSkeleton key={i} />
+            ))}
+          </div>
+        ) : (
+          <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4'>
+            {genresData?.genres.map((genre) => (
+              <GenreCard
+                key={genre.id}
+                name={genre.name}
+                href={`/genre/${genre.id}`}
+              />
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );

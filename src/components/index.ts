@@ -1,4 +1,5 @@
 export { ThemeProvider } from './providers/theme-provider';
+export { QueryProvider } from './providers/query-provider';
 export { Header } from './layout/header';
 export { Sidebar } from './layout/sidebar';
 export { MainContent } from './layout/main-content';
@@ -7,3 +8,5 @@ export { MovieCard } from './movie/movie-card';
 export { MovieList } from './movie/movie-list';
 export { GenreCard } from './genre/genre-card';
 export { SectionHeader } from './section/section-header';
+export { MovieCardSkeleton } from './skeleton/movie-card-skeleton';
+export { GenreCardSkeleton } from './skeleton/genre-card-skeleton';

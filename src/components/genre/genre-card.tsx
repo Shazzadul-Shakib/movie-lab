@@ -2,12 +2,9 @@
 
 import Link from 'next/link';
 import { Film } from 'lucide-react';
+import type { GenreCardData } from '@/types';
 
-interface GenreCardProps {
-  name: string;
-  href: string;
-  movieCount?: number;
-}
+interface GenreCardProps extends GenreCardData {}
 
 export function GenreCard({ name, href, movieCount }: GenreCardProps) {
   return (

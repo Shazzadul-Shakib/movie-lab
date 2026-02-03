@@ -1,18 +1,11 @@
 'use client';
 
 import { MovieCard } from './movie-card';
-
-interface Movie {
-  id: number;
-  title: string;
-  posterUrl: string;
-  rating: number;
-  year: number;
-}
+import type { MovieCardData, MovieCardSize } from '@/types';
 
 interface MovieListProps {
-  movies: Movie[];
-  size?: 'small' | 'medium' | 'large';
+  movies: MovieCardData[];
+  size?: MovieCardSize;
 }
 
 export function MovieList({ movies, size = 'medium' }: MovieListProps) {

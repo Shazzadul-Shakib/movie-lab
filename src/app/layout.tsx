@@ -3,10 +3,12 @@
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/theme-provider';
+import { QueryProvider } from '@/components/providers/query-provider';
 import { Header } from '@/components/layout/header';
 import { Sidebar } from '@/components/layout/sidebar';
 import { MainContent } from '@/components/layout/main-content';
 import { useState, useCallback } from 'react';
+import { Toaster } from 'sonner';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -45,17 +47,20 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='light'
-          enableSystem={false}
-          disableTransitionOnChange
-          storageKey='movielab-theme'
-        >
-          <Header onMenuToggle={handleMenuToggle} />
-          <Sidebar isOpen={sidebarOpen} onClose={handleClose} />
-          <MainContent>{children}</MainContent>
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='light'
+            enableSystem={false}
+            disableTransitionOnChange
+            storageKey='movielab-theme'
+          >
+            <Toaster position='top-right' richColors />
+            <Header onMenuToggle={handleMenuToggle} />
+            <Sidebar isOpen={sidebarOpen} onClose={handleClose} />
+            <MainContent>{children}</MainContent>
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );
